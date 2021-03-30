@@ -12,15 +12,15 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="pin-generator half-width">
-                    <input class="form-control" type="text">
-                    <button class="generate-btn">Generate Pin</button>
+                    <input id="pin" class="form-control" type="text">
+                    <button onclick="generatePin()" class="generate-btn">Generate Pin</button>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="input-section half-width">
-                    <input class="form-control" type="text">
+                    <input id="typed-pin" class="form-control" type="text">
                     <div class="numbers">
-                        <div class="calc-body">
+                        <div id="digit-container" class="calc-body">
                             <div class="calc-button-row">
                               <div class="button">7</div>
                               <div class="button">8</div>
@@ -42,7 +42,7 @@
                                 <div class="button">C</div>
                             </div>
                             <div>
-                                <button type="submit" class="submit-btn">Submit</button>
+                                <button onclick="verifyPin()" type="submit" class="submit-btn">Submit</button>
                                 <p class="action-left">3 try left</p>
                             </div>
                     </div>
@@ -50,9 +50,65 @@
             </div>
         </div>
         <div class="notify-section">
-            <p class="notify">❌ Pin Didn't Match, Please try again</p>
-            <p class="notify">✅ Pin Matched... Secret door is opening for you</p>
+            <p id="inc-pin" class="notify">❌ Pin Didn't Match, Please try again</p>
+            <p id="c-pin" class="notify">✅ Pin Matched... Secret door is opening for you</p>
         </div>
     </div>
+    <script>
+        function getPin(){
+            const random = Math.random()*10000;
+            const pin = (random + '').split('.')[0];
+            if(pin.length === 4){
+                return pin;
+            }
+            else{
+                return getPin();
+            }
+        }   
+        //display generate pin
+        function generatePin(){
+            const pinInput = document.getElementById('pin').value = getPin();
+        }
+       // handle calculator button event
+       const buttonContainer = document.getElementById('digit-container')
+            .addEventListener('click', function(event){
+                digit = event.target.innerText;
+                if(isNaN(digit)){
+                    if(digit === 'C'){
+                        const typedInput = document.getElementById('typed-pin').value = "";
+                    }
+                }
+                // if(digit === 'B'){
+                //         const typedInput = document.getElementById('typed-pin')
+                //         typedInput.value = typedInput.value - digit;
+                //     }
+                else{
+                    const typedInput = document.getElementById('typed-pin')
+                    typedInput.value = typedInput.value + digit;
+                }
+            })
+            // verify pin
+            function verifyPin(){
+                const pin = document.getElementById('pin').value;
+                const typedPin = document.getElementById('typed-pin').value;
+                if(pin === typedPin){
+                   matchResult('block', 'none')
+                }
+                else{
+                    matchResult('none', 'block')
+                }
+            }
+            function matchResult(correctStatus, incorrectStatus){
+                const correct = document.getElementById('c-pin');
+                correct.style.display = correctStatus;
+                const inCorrect = document.getElementById('inc-pin');
+                inCorrect.style.display = incorrectStatus;
+                    
+            }
+
+
+
+
+    </script>
 </body>
 </html>

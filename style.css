@@ -20,7 +20,7 @@ body {
     width: 180px;
     padding: 50px;
     border-radius: 50%;
-    border: 8px solid #39458C;
+    border: 8px solid #3b3f5a;
     background-color: #495BC3;
     color: #ffffff;
     font-weight: bold;
@@ -95,6 +95,7 @@ color: #E0B612;
     margin-top: 20px;
     border-radius: 15px;
     padding: 5px 20px;
+    display: none;
 }
 .notify-section{
     width: 35%;
